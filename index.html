@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetLink AI - Animal Healthcare & SOS Rescue Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="glow-bg bg-cyan"></div>
+    <div class="glow-bg bg-rose"></div>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="url(#paint0_linear)" stroke-width="2"/>
+                    <path d="M12 8V16M8 12H16" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#00f0ff"/>
+                            <stop offset="1" stop-color="#ff007a"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>VetLink <span class="accent-text">AI</span></span>
+            </div>
+            <nav>
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#scan" class="nav-link">AI Scanner</a>
+                <a href="#sos" class="nav-link">SOS Alert</a>
+                <a href="#chatbot" class="nav-link">AI Chatbot</a>
+            </nav>
+            <div class="user-profile">
+                <span class="user-badge">BCA Demo</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>AI-Powered Animal Healthcare & <span class="highlight-text">Stray Rescue Portal</span></h1>
+            <p class="subtitle">Next-gen diagnostic intelligence and real-time emergency dispatch at your fingertips. Built as a startup prototype for animal welfare.</p>
+        </section>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid" id="dashboard">
+            
+            <!-- COLUMN 1: AI Scanner & SOS -->
+            <div class="dashboard-col">
+                <!-- 1. AI Photo Diagnosis Card -->
+                <div class="card glass-card scan-card" id="scan">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon-pulse cyan-pulse"></span>
+                            <h2>AI Disease Diagnosis Scanner</h2>
+                        </div>
+                        <span class="badge badge-cyan">Vision AI v1.2</span>
+                    </div>
+                    <p class="card-desc">Upload or simulate a picture of the animal's affected skin/lesion to classify health issues.</p>
+                    
+                    <div class="scanner-container">
+                        <div class="scan-frame" id="scanFrame">
+                            <div class="scan-line" id="scanLine" style="display: none;"></div>
+                            <div class="scan-placeholder" id="scanPlaceholder">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                                <p>Select Test Image to Analyze</p>
+                            </div>
+                            <img id="scanImage" src="" alt="Scan source" class="scan-preview-img" style="display: none;">
+                        </div>
+
+                        <div class="test-selectors">
+                            <button class="btn btn-secondary" onclick="runSimulatedScan('dog_mange')">Test Case 1: Dog Skin Issue</button>
+                            <button class="btn btn-secondary" onclick="runSimulatedScan('cat_dermatitis')">Test Case 2: Cat Ear Scabs</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Result Box (Hidden by default, shown via JS) -->
+                    <div class="results-box" id="resultsBox" style="display: none;">
+                        <div class="results-main">
+                            <div class="score-ring">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" id="confidencePath" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <div class="percentage" id="confidenceVal">0%</div>
+                            </div>
+                            <div class="results-text">
+                                <h3 id="predictedCondition">Analyzing...</h3>
+                                <p>Diagnostic Confidence Score</p>
+                            </div>
+                        </div>
+                        <div class="first-aid-container">
+                            <h4>First Aid Recommendation:</h4>
+                            <p id="firstAidText"></p>
+                        </div>
+                        <div class="disclaimer-alert">
+                            <strong>Disclaimer:</strong> This is a simulated machine learning estimation for education. Please seek a registered veterinarian for actual medical emergencies.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. SOS Emergency Dispatch Card -->
+                <div class="card glass-card sos-card" id="sos">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon-pulse red-pulse"></span>
+                            <h2>Emergency SOS Trigger</h2>
+                        </div>
+                        <span class="badge badge-rose">REAL-TIME</span>
+                    </div>
+                    <p class="card-desc">Clicking this button broadcasts GPS coordinates to local active NGOs for stray rescues.</p>
+                    
+                    <div class="sos-wrapper">
+                        <button class="sos-btn" id="sosBtn" onclick="triggerSOS()">
+                            <span class="sos-ripple"></span>
+                            <span class="sos-text">SOS</span>
+                        </button>
+                        <div class="sos-details" id="sosDetails" style="display: none;">
+                            <div class="status-indicator">
+                                <span class="status-dot-active"></span>
+                                <span>Status: <strong class="accent-rose">ALERT BROADCASTED</strong></span>
+                            </div>
+                            <p><strong>Incident Location:</strong> 28.6139° N, 77.2090° E (New Delhi)</p>
+                            <p><strong>Dispatched To:</strong> 3 Rescue Centers within 5km</p>
+                            <div class="dispatch-log" id="dispatchLog">
+                                <div class="log-item"><span>[14:15:02]</span> System registered incident coordinates.</div>
+                                <div class="log-item"><span>[14:15:05]</span> Dispatched to NGO "Jeev Aashraya".</div>
+                                <div class="log-item class-active"><span>[14:15:10]</span> NGO Volunteer (Rohan K.) claimed this rescue.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: AI Chatbot & NGO Map -->
+            <div class="dashboard-col">
+                <!-- 3. AI Veterinarian Chatbot -->
+                <div class="card glass-card chatbot-card" id="chatbot">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon-pulse green-pulse"></span>
+                            <h2>AI Assistant (Vet Chat)</h2>
+                        </div>
+                        <span class="badge badge-emerald">Online</span>
+                    </div>
+                    <div class="chat-container" id="chatContainer">
+                        <div class="message incoming">
+                            <div class="avatar">🐾</div>
+                            <div class="msg-bubble">
+                                Hello! I am your AI Animal Health assistant. Ask me anything about animal care, nutrition, or symptoms.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-prompts">
+                        <button class="chip" onclick="askChatbot('My dog ate a grape, what should I do?')">Dog ate grape?</button>
+                        <button class="chip" onclick="askChatbot('How to identify ticks on a cat?')">Cat tick detection</button>
+                        <button class="chip" onclick="askChatbot('What vaccine should a puppy get at 8 weeks?')">Puppy vaccines</button>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Type animal symptom or care question..." onkeypress="handleChatKey(event)">
+                        <button class="btn btn-primary send-btn" onclick="sendChatMsg()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Interactive Map Dashboard Mock -->
+                <div class="card glass-card map-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <h2>Nearby Vets & Active SOS Alerts</h2>
+                        </div>
+                        <span class="badge badge-cyan">Geospatial</span>
+                    </div>
+                    <p class="card-desc">Simulated map interface depicting nearest clinical centers (Cyan) and SOS hotspots (Red).</p>
+                    
+                    <div class="map-mock">
+                        <div class="map-grid">
+                            <!-- Simulated Map Elements -->
+                            <div class="map-grid-line h1"></div>
+                            <div class="map-grid-line h2"></div>
+                            <div class="map-grid-line v1"></div>
+                            <div class="map-grid-line v2"></div>
+
+                            <!-- Map Pins -->
+                            <div class="map-pin clinic-pin" style="top: 25%; left: 35%;" onclick="showMapPinDetails('Paws & Claws Veterinary Clinic', '1.2 km away', 'Emergency available')">
+                                <span class="pin-ring"></span>
+                                <span class="pin-dot">🏥</span>
+                            </div>
+
+                            <div class="map-pin clinic-pin" style="top: 60%; left: 70%;" onclick="showMapPinDetails('City Animal Care Center', '3.5 km away', '24/7 ICU support')">
+                                <span class="pin-ring"></span>
+                                <span class="pin-dot">🏥</span>
+                            </div>
+
+                            <div class="map-pin sos-pin animate-bounce" id="mapSosPin" style="top: 45%; left: 50%; display: none;" onclick="showMapPinDetails('Active SOS: Stray Dog Injury', 'Reported just now', 'NGO Jeev Aashraya dispatching volunteer')">
+                                <span class="pin-ring-red"></span>
+                                <span class="pin-dot">🚨</span>
+                            </div>
+                        </div>
+                        <div class="map-details-overlay" id="mapDetailsOverlay">
+                            <h4 id="mapPinTitle">Click a pin to view clinic details</h4>
+                            <p id="mapPinSubtitle"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>VetLink AI Prototype &copy; 2026. Designed for BCA Major Project Tech Expo showcase.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
